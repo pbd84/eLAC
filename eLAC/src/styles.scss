@@ -1,0 +1,48 @@
+/** imports */
+@import "~@angular/material/theming";
+@include mat-core();
+
+/** eLAC light theme */
+$lac-primary: mat-palette($mat-light-blue, 900);
+$lac-accent: mat-palette($mat-orange, A200, A100, A400);
+$lac-warn: mat-palette($mat-red);
+
+$lac-light-theme: mat-light-theme($lac-primary, $lac-accent, $lac-warn);
+@include angular-material-theme($lac-light-theme);
+
+/** eLAC dark Theme */
+$lac-dark-primary: mat-palette($mat-blue-grey);
+$lac-dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$lac-dark-warn: mat-palette($mat-deep-orange);
+$lac-dark-theme: mat-dark-theme($lac-dark-primary, $lac-dark-accent, $lac-dark-warn);
+
+.elac-dark-theme {
+  @include angular-material-theme($lac-dark-theme);
+}
+
+$custom-typography: mat-typography-config(
+  $font-family: "Roboto, sans-serif",
+  $headline: mat-typography-level(32px, 48px, 500),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include angular-material-typography($custom-typography);
+
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.snackbar {
+  background: tomato!important;
+}
+
+em {
+  color: tomato;
+}

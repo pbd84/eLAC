@@ -1,0 +1,64 @@
+<div *ngIf="data$ | async as data">
+    <div *ngFor="let item of data">
+        <mat-list>
+          <!-- ### using list to structure output ### -->
+          <mat-chip-list>
+            <mat-icon>folder</mat-icon>
+            <a mat-button>{{item.title}}</a>
+          </mat-chip-list>
+          <p class="mat-caption">
+            {{item.description}}
+          </p>
+
+          <div *ngFor="let entry of result">
+            <div *ngIf="item.id == entry.id">
+              <!-- ###### generate result list ###### -->
+            <mat-list fxLayout="row wrap" fxLayout.xs="column">
+              <!-- ### filter for certain types of objects (pdf, audio, video) see elac-collection.component.ts ###-->
+                  <mat-card
+                    style ="margin-top: 20px; margin-left: auto; margin-right: auto;" fxFlex.xl="20%" fxFlex.lg="30%" fxFlex.md="30%" fxFlex.gt-xs="50%" fxFlex.xs="100%"
+                    *ngFor="let file of filteredFiles(entry?.parentOf)">
+                    <!-- ##### generate tile for audio Objects #####-->
+                    <div *ngIf="file.contentType.startsWith('audio')" class="mat-caption">
+                      <a style="text-decoration: none;" [routerLink]="['/audioplayer' +'/'+ file?.id +'/'+ file?.contentType]">
+                        <mat-icon>audiotrack</mat-icon>
+                        <a mat-button>{{file.label}}</a>
+                        <div class="md-card-wrapper" style=" position: center;width: 60%; height:auto; margin-left: 20%;">
+                          <img src="../../assets/images/music.png" alt="Avatar" class="image"style="width: 100%; height: auto;">
+                        </div>
+                        {{item.description}}
+                      </a>
+                    </div>
+                    <!-- ##### /generate tile for audio Objects  #####-->
+                    <!-- #####  generate tile for video Objects#####-->
+                    <div *ngIf="file.contentType.startsWith('video')" class="mat-caption">
+                      <a style="text-decoration: none;" [routerLink]="['/videoplayer' +'/'+ file?.id +'/'+ file?.contentType]">
+                        <mat-icon>video_label</mat-icon>
+                        <a mat-button>{{file.label}}</a>
+                        <div class="md-card-wrapper" style=" position: relative;width: 90%; height:auto; margin-left: 5%;">
+                          <img [src]="generateThumbnail(file.id)" alt="Avatar" class="image" style="width: 100%; height: auto;">
+                          <span style="position: absolute;top: 30%;right: 55%;color: white;">
+                          <mat-icon style="position: relative;font-size: 90px;">play_circle_outline</mat-icon>
+                        </span>
+                        </div>
+                        {{item.description}}
+                      </a>
+                    </div>
+                    <!-- ##### /generate tile for video Objects #####-->
+                    <!-- ##### generate tile for pdf Objects #####-->
+                    <div *ngIf="file.contentType.endsWith('pdf')">
+                      <mat-icon matPreffix>picture_as_pdf</mat-icon>
+                      <a mat-button [href]="downloadFile(file.id)" download>
+                        {{file.label}}
+                        <mat-icon>cloud_download</mat-icon>
+                      </a>
+                    </div>
+                    <!-- ##### /generate tile for pdf Objects #####-->
+            </mat-card>
+            </mat-list>
+              <!-- ###### /generate result list ###### -->
+            </div>
+          </div>
+        </mat-list>
+    </div>
+</div>

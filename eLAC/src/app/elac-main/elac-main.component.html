@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon>view_list</mat-icon>
+        </div>
+        <mat-card-title>Collections</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="data$ | async as collectionList">
+      <!-- ### generate button for every collection in LAC ### -->
+        <mat-list *ngFor="let entry of collectionList.dataset">
+            <mat-list-item>
+               <mat-icon>folder</mat-icon>
+              <!-- ### Link to chosen collection(entry) by parameter ### -->
+                <a mat-button [routerLink]="['./collection/'+ entry?.title + '/' + entry?.routeId]"
+                style="white-space: normal; text-align: left; line-height: 18px;">
+                  {{entry?.title}}</a>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

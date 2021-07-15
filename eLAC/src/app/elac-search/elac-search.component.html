@@ -1,0 +1,24 @@
+<form class="search-form">
+  <!-- ### Searchbar ### -->
+    <mat-form-field class="mat-form-field-infix" fxFlex fxLayout fxLayoutAlign="end">
+        <mat-icon class="mat-form-field-prefix" matPrefix aria-hidden="false" aria-label="searchbar">search</mat-icon> &nbsp;
+        <!-- ### Inputbox with autocompletion ###-->
+        <input matInput placeholder="Search" #searchbar id="text-input" [matAutocomplete]="auto">
+        <button mat-button *ngIf="searchbar.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchbar.value=''"]>
+            <mat-icon matSuffix>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngIf="inProgress">
+                <mat-spinner diameter="25"></mat-spinner>
+            </mat-option>
+            <div *ngIf="hints">
+                <mat-option *ngFor="let option of hints" [value]="option?.key">
+                    <span [innerHTML]="option.key"> </span>
+                </mat-option>
+            </div>
+        </mat-autocomplete>
+        <mat-hint>
+           <!-- {{info}}-->
+        </mat-hint>
+    </mat-form-field>
+</form>

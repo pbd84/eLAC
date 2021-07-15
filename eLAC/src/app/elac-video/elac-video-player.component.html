@@ -1,0 +1,42 @@
+<mat-card class="video-card">
+  <mat-card-actions>
+    <section *ngIf="data">
+      <!-- ### find videofile in data ### -->
+      <div *ngFor="let bundle of data">
+        <div *ngFor="let item of bundle?.query">
+          <div *ngFor="let file of bundle?.object?.parentOf">
+            <div *ngIf="file.id == videoId">
+              <mat-list>
+                <mat-chip-list>
+                  <mat-icon>folder</mat-icon>
+                  {{item.title}}
+                </mat-chip-list>
+                <br/>
+                <mat-chip-list>
+                  <mat-icon>audiotrack</mat-icon>
+                  {{file.label}}
+                </mat-chip-list>
+                <br/>
+                <!-- ##### Videoplayer #####-->
+                <mat-card-content>
+                  <video controls [poster]="thumbnail" preload="metadata" style="width: 100%; height: auto;">
+                    <source [src]="video" [type]="videoType">
+                    <p> Your browser doesn't support HTML5 video. </p>
+                    <p>
+                      <em>Download Video:</em>
+                      <a [href]="src"></a>
+                    </p>
+                    <track kind="captions" />
+                  </video>
+                </mat-card-content>
+                <!-- ##### /Videoplayer #####-->
+                <p class="mat-caption">
+                  {{item.description}}
+                </p>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </mat-card-actions>
